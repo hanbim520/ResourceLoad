@@ -8,6 +8,34 @@
 
 #ifndef FileHandle_h
 #define FileHandle_h
+#include <string>
+#include <sys/stat.h>
+#include <sys/types.h>
 
+#include "OSGlobalEnums.h"
+
+namespace EasyLoader {
+struct FileHandle
+{
+    int fd;
+    FileType type;
+    std::string path;
+    int options;
+    int shareMode;
+    int accessMode;
+    
+    // device and inode are used as key for finding file handles
+    dev_t device;
+    ino_t inode;
+    
+    // Linked list of file handles
+    FileHandle *prev;
+    FileHandle *next;
+    
+    FileHandle() : prev(NULL), next(NULL)
+    {
+    }
+};
+}
 
 #endif /* FileHandle_h */

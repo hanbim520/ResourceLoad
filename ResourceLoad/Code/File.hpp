@@ -11,4 +11,20 @@
 
 #include <stdio.h>
 
+#include "FileHandle.h"
+#include "ErrorCode.h"
+
+namespace EasyLoader {
+
+class File{
+public:
+    static  int64_t GetLength(FileHandle* handle, int *error);
+    static  ErrorCode FileErrnoToErrorCode(int32_t code);
+    static  ErrorCode PathErrnoToErrorCode(const std::string& path, int32_t code);
+   
+    
+   static FileHandle* Open(const std::string& path, int mode, int accessMode, int shareMode, int options, int *error);
+   static bool Close(FileHandle* handle, int *error);
+};
+}
 #endif /* File_hpp */

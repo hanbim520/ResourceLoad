@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		EE660AA522F4306300E1F5FD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE660AA422F4306300E1F5FD /* main.cpp */; };
+		EE660AC622F45A8300E1F5FD /* File.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE660AC422F45A8300E1F5FD /* File.cpp */; };
+		EE660AC922F45AE500E1F5FD /* MemoryMappedFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE660AC722F45AE500E1F5FD /* MemoryMappedFile.cpp */; };
+		EE660ACF22F4629100E1F5FD /* Loader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EE660ACD22F4629100E1F5FD /* Loader.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +28,15 @@
 /* Begin PBXFileReference section */
 		EE660AA122F4306300E1F5FD /* ResourceLoad */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ResourceLoad; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE660AA422F4306300E1F5FD /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		EE660AC422F45A8300E1F5FD /* File.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = File.cpp; sourceTree = "<group>"; };
+		EE660AC522F45A8300E1F5FD /* File.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = File.hpp; sourceTree = "<group>"; };
+		EE660AC722F45AE500E1F5FD /* MemoryMappedFile.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MemoryMappedFile.cpp; sourceTree = "<group>"; };
+		EE660AC822F45AE500E1F5FD /* MemoryMappedFile.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MemoryMappedFile.hpp; sourceTree = "<group>"; };
+		EE660ACA22F45BB000E1F5FD /* FileHandle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileHandle.h; sourceTree = "<group>"; };
+		EE660ACB22F45BD600E1F5FD /* OSGlobalEnums.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSGlobalEnums.h; sourceTree = "<group>"; };
+		EE660ACC22F45ED900E1F5FD /* ErrorCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ErrorCode.h; sourceTree = "<group>"; };
+		EE660ACD22F4629100E1F5FD /* Loader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Loader.cpp; sourceTree = "<group>"; };
+		EE660ACE22F4629100E1F5FD /* Loader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Loader.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +53,7 @@
 		EE660A9822F4306300E1F5FD = {
 			isa = PBXGroup;
 			children = (
+				EE660AB422F4370B00E1F5FD /* Code */,
 				EE660AA322F4306300E1F5FD /* ResourceLoad */,
 				EE660AA222F4306300E1F5FD /* Products */,
 			);
@@ -60,6 +73,22 @@
 				EE660AA422F4306300E1F5FD /* main.cpp */,
 			);
 			path = ResourceLoad;
+			sourceTree = "<group>";
+		};
+		EE660AB422F4370B00E1F5FD /* Code */ = {
+			isa = PBXGroup;
+			children = (
+				EE660AC422F45A8300E1F5FD /* File.cpp */,
+				EE660AC522F45A8300E1F5FD /* File.hpp */,
+				EE660AC722F45AE500E1F5FD /* MemoryMappedFile.cpp */,
+				EE660AC822F45AE500E1F5FD /* MemoryMappedFile.hpp */,
+				EE660ACA22F45BB000E1F5FD /* FileHandle.h */,
+				EE660ACB22F45BD600E1F5FD /* OSGlobalEnums.h */,
+				EE660ACC22F45ED900E1F5FD /* ErrorCode.h */,
+				EE660ACD22F4629100E1F5FD /* Loader.cpp */,
+				EE660ACE22F4629100E1F5FD /* Loader.hpp */,
+			);
+			path = Code;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,6 +148,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE660AA522F4306300E1F5FD /* main.cpp in Sources */,
+				EE660AC922F45AE500E1F5FD /* MemoryMappedFile.cpp in Sources */,
+				EE660ACF22F4629100E1F5FD /* Loader.cpp in Sources */,
+				EE660AC622F45A8300E1F5FD /* File.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

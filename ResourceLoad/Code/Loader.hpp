@@ -11,4 +11,11 @@
 
 #include <stdio.h>
 
+namespace EasyLoader {
+    class Loader{
+    public:
+        void* LoadMetadataFile(const char* fileName);
+    };
+}
+
 #endif /* Loader_hpp */
