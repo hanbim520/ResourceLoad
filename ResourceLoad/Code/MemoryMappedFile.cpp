@@ -19,6 +19,9 @@ namespace EasyLoader {
 
 static std::mutex s_MutexMap;
 static std::mutex s_MutexUnmap;
+#ifdef TARGET_POSIX
+    static std::mutex s_MutexPostMap;
+#endif
 static std::map<void*, int64_t> s_MappedAddressToMappedLength;
 
 void* MemoryMappedFile::Map(FileHandle* file, size_t length, size_t offset)
@@ -49,17 +52,19 @@ void* MemoryMappedFile::Map(FileHandle* file, size_t length, size_t offset)
     return address;
 }
 
-#if TARGET_POSIX
+#ifdef TARGET_POSIX
 void* MemoryMappedFile::Map(int fd, size_t length, size_t offset)
 {
-    os::FastAutoLock lock(&s_Mutex);
-
+    s_MutexPostMap.lock();
     void* address = mmap(NULL, length, PROT_READ, MAP_FILE | MAP_PRIVATE, fd, offset);
     if ((intptr_t)address == -1)
+    {
+        s_MutexPostMap.unlock();
         return NULL;
+    }
 
     s_MappedAddressToMappedLength[address] = length;
-
+    s_MutexPostMap.unlock();
     return address;
 }
 #endif

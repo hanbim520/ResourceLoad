@@ -29,7 +29,7 @@ public:
     
     static void* Map(FileHandle* file, size_t length, size_t offset);
     static void Unmap(void* address, size_t length);
-#if TARGET_POSIX
+#ifdef TARGET_POSIX
     static void* Map(int fd, size_t length, size_t offset);
 #endif
 };
