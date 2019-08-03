@@ -267,22 +267,14 @@ ErrorCode File::FileErrnoToErrorCode(int32_t code)
 {
     const int flags = ConvertFlags(accessMode, mode);
     
-    /* we don't use sharemode, because that relates to sharing of
-     * the file when the file is open and is already handled by
-     * other code, perms instead are the on-disk permissions and
-     * this is a sane default.
+    /* 不建议采用共享模式，以免文件在其他进程（线程）持有
      */
     const mode_t perms = options & kFileOptionsTemporary ? 0600 : 0666;
     
     int fd = open(path.c_str(), flags, perms);
     
-    /* If we were trying to open a directory with write permissions
-     * (e.g. O_WRONLY or O_RDWR), this call will fail with
-     * EISDIR. However, this is a bit bogus because calls to
-     * manipulate the directory (e.g. SetFileTime) will still work on
-     * the directory because they use other API calls
-     * (e.g. utime()). Hence, if we failed with the EISDIR error, try
-     * to open the directory again without write permission.
+    /*
+     打开带有写权限的目录返回失败EISDIR时，将尝试不带写权限的打开方式
      */
     
     // Try again but don't try to make it writable
