@@ -23,8 +23,15 @@ public:
     static  ErrorCode PathErrnoToErrorCode(const std::string& path, int32_t code);
    
     
-   static FileHandle* Open(const std::string& path, int mode, int accessMode, int shareMode, int options, int *error);
-   static bool Close(FileHandle* handle, int *error);
+    static FileHandle* Open(const std::string& path, int mode, int accessMode, int shareMode, int options, int *error);
+    static bool Close(FileHandle* handle, int *error);
+    static int Read(FileHandle* handle, char *dest, int count, int *error);
+    static int32_t Write(FileHandle* handle, const char* buffer, int count, int *error);
+    static bool Flush(FileHandle* handle, int* error);
+    static void Lock(FileHandle* handle, int64_t position, int64_t length, int* error);
+    static void Unlock(FileHandle* handle, int64_t position, int64_t length, int* error);
+    static bool SetLength(FileHandle* handle, int64_t length, int *error);
+    static int64_t Seek(FileHandle* handle, int64_t offset, int origin, int *error);
 };
 }
 #endif /* File_hpp */

@@ -380,5 +380,250 @@ ErrorCode File::PathErrnoToErrorCode(const std::string& path, int32_t code)
      return kErrorCodeFileNotFound;
 }
 
+    int File::Read(FileHandle* handle, char *dest, int count, int *error)
+    {
+        if ((handle->accessMode & kFileAccessRead) == 0)
+        {
+            *error = kErrorCodeAccessDenied;
+            return 0;
+        }
+        
+        int ret;
+        
+        do
+        {
+            ret = (int)read(handle->fd, dest, count);
+        }
+        while (ret == -1 && errno == EINTR);
+        
+        if (ret == -1)
+        {
+            *error = FileErrnoToErrorCode(errno);
+            return 0;
+        }
+        
+        return ret;
+    }
+    
+    int32_t File::Write(FileHandle* handle, const char* buffer, int count, int *error)
+    {
+        if ((handle->accessMode & kFileAccessWrite) == 0)
+        {
+            *error = kErrorCodeAccessDenied;
+            return 0;
+        }
+        
+        int ret;
+        
+        do
+        {
+            ret = (int32_t)write(handle->fd, buffer, count);
+        }
+        while (ret == -1 && errno == EINTR);
+        
+        if (ret == -1)
+        {
+            *error = FileErrnoToErrorCode(errno);
+            return 0;
+        }
+        
+        return ret;
+    }
+    
+    bool File::Flush(FileHandle* handle, int* error)
+    {
+        if (handle->type != kFileTypeDisk)
+        {
+            *error = kErrorCodeInvalidHandle;
+            return false;
+        }
+        
+        const int ret = fsync(handle->fd);
+        
+        if (ret == -1)
+        {
+            *error = FileErrnoToErrorCode(errno);
+            return false;
+        }
+        
+        *error = kErrorCodeSuccess;
+        return true;
+    }
+    
+    void File::Lock(FileHandle* handle, int64_t position, int64_t length, int* error)
+    {
+        struct flock lock_data;
+        int ret;
+        
+        lock_data.l_type = F_WRLCK;
+        lock_data.l_whence = SEEK_SET;
+        lock_data.l_start = position;
+        lock_data.l_len = length;
+        
+        do
+        {
+            ret = fcntl(handle->fd, F_SETLK, &lock_data);
+        }
+        while (ret == -1 && errno == EINTR);
+        
+        if (ret == -1)
+        {
+            /*
+             * if locks are not available (NFS for example),
+             * ignore the error
+             */
+            if (errno == ENOLCK
+#ifdef EOPNOTSUPP
+                || errno == EOPNOTSUPP
+#endif
+#ifdef ENOTSUP
+                || errno == ENOTSUP
+#endif
+                )
+            {
+                *error = kErrorCodeSuccess;
+                return;
+            }
+            
+            *error = FileErrnoToErrorCode(errno);
+            return;
+        }
+        
+        *error = kErrorCodeSuccess;
+    }
+    
+    void File::Unlock(FileHandle* handle, int64_t position, int64_t length, int* error)
+    {
+        struct flock lock_data;
+        int ret;
+        
+        lock_data.l_type = F_UNLCK;
+        lock_data.l_whence = SEEK_SET;
+        lock_data.l_start = position;
+        lock_data.l_len = length;
+        
+        do
+        {
+            ret = fcntl(handle->fd, F_SETLK, &lock_data);
+        }
+        while (ret == -1 && errno == EINTR);
+        
+        if (ret == -1)
+        {
+            /*
+             * if locks are not available (NFS for example),
+             * ignore the error
+             */
+            if (errno == ENOLCK
+#ifdef EOPNOTSUPP
+                || errno == EOPNOTSUPP
+#endif
+#ifdef ENOTSUP
+                || errno == ENOTSUP
+#endif
+                )
+            {
+                *error = kErrorCodeSuccess;
+                return;
+            }
+            
+            *error = FileErrnoToErrorCode(errno);
+            return;
+        }
+        
+        *error = kErrorCodeSuccess;
+    }
+    bool File::SetLength(FileHandle* handle, int64_t length, int *error)
+    {
+        if (handle->type != kFileTypeDisk)
+        {
+            *error = kErrorCodeInvalidHandle;
+            return false;
+        }
+        
+        // Save current position
+        const off_t currentPosition = lseek(handle->fd, 0, SEEK_CUR);
+        
+        if (currentPosition == -1)
+        {
+            *error = FileErrnoToErrorCode(errno);
+            return false;
+        }
+        
+        const off_t setLength = lseek(handle->fd, length, SEEK_SET);
+        
+        if (setLength == -1)
+        {
+            *error = FileErrnoToErrorCode(errno);
+            return false;
+        }
+        
+        int ret = 0;
+        
+        do
+        {
+            ret = ftruncate(handle->fd, length);
+        }
+        while (ret == -1 && errno == EINTR);
+        
+        if (ret == -1)
+        {
+            *error = FileErrnoToErrorCode(errno);
+            return false;
+        }
+        
+        const off_t oldPosition = lseek(handle->fd, currentPosition, SEEK_SET);
+        
+        if (oldPosition == -1)
+        {
+            *error = FileErrnoToErrorCode(errno);
+            return false;
+        }
+        
+        *error = kErrorCodeSuccess;
+        
+        return true;
+    }
+    int64_t File::Seek(FileHandle* handle, int64_t offset, int origin, int *error)
+    {
+        if (handle->type != kFileTypeDisk)
+        {
+            *error = kErrorCodeInvalidHandle;
+            return false;
+        }
+        
+        int whence;
+        
+        switch (origin)
+        {
+            case kFileSeekOriginBegin:
+                whence = SEEK_SET;
+                break;
+            case kFileSeekOriginCurrent:
+                whence = SEEK_CUR;
+                break;
+            case kFileSeekOriginEnd:
+                whence = SEEK_END;
+                break;
+            default:
+            {
+                *error = kErrorCodeInvalidParameter;
+                return -1;
+            }
+        }
+        
+        const off_t position = lseek(handle->fd, offset, whence);
+        
+        if (position == -1)
+        {
+            *error = FileErrnoToErrorCode(errno);
+            return -1;
+        }
+        
+        *error = kErrorCodeSuccess;
+        
+        return position;
+    }
+
 }
 
