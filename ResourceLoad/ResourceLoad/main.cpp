@@ -10,6 +10,7 @@
 #include <time.h>
 #include <iostream>
 #include <fstream>
+#include <mutex>
 
 #include "../Code/Loader.hpp"
 
@@ -17,6 +18,7 @@ void DoTest()
 {
 	clock_t start, finish;
 	double totaltime;
+	std::mutex mMutext;
 
 	EasyLoader::Loader *_loader = new  EasyLoader::Loader();
 
@@ -24,7 +26,7 @@ void DoTest()
 	for (int i = 0; i < 1000; ++i)
 	{
 #if TARGET_WIN
-		void* file = _loader->LoadMetadataFile("I:/UnityPro/MSDK/MSDK_Unity_3.2.27.1_99388.unityPackage");
+		void* file = _loader->LoadMetadataFile("I:/Github/ResourceLoad/1.mkv");
 		//	char* content = (char *)file;
 #else
 		void* file = _loader->LoadMetadataFile("/Users/zhanghaijun/Desktop/TENCENT_MSDKUnity_ALL_3.2.27.1_99388.zip");
@@ -45,7 +47,9 @@ void DoTest()
 	for (int i = 0; i < 1000; ++i) {
 		memset(data, 0, 1000000);
 #if TARGET_WIN
-		infile.open("I:/UnityPro/MSDK/MSDK_Unity_3.2.27.1_99388.unityPackage");
+		mMutext.lock();
+		infile.open("I:/Github/ResourceLoad/1.mkv");
+		mMutext.unlock();
 		//	infile >> data;
 #else
 		infile.open("/Users/zhanghaijun/Desktop/TENCENT_MSDKUnity_ALL_3.2.27.1_99388.zip");
