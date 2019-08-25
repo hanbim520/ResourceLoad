@@ -1,3 +1,10 @@
+﻿//
+//  Memory.h
+//  ResourceLoad
+//
+//  Created by 张海军 on 8/25/19.
+//  Copyright © 2019 张海军. All rights reserved.
+//
 #pragma once
 
 namespace EaseLoad

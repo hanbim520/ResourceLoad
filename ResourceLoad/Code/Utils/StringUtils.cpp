@@ -1,4 +1,10 @@
-
+﻿//
+//  StringUtils.cpp
+//  ResourceLoad
+//
+//  Created by 张海军 on 8/25/19.
+//  Copyright © 2019 张海军. All rights reserved.
+//
 #include "StringUtils.h"
 #include "source/utf8.h"
 
