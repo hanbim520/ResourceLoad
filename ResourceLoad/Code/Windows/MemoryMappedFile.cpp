@@ -30,8 +30,8 @@ namespace EasyLoader {
 			s_MutexMap.unlock();
 			return NULL;
 		}
-		EaseLoad_ASSERT(offset <= (std::numeric_limits<DWORD>::max)());
-		EaseLoad_ASSERT(length <= (std::numeric_limits<DWORD>::max)());
+		EasyLoad_ASSERT(offset <= (std::numeric_limits<DWORD>::max)());
+		EasyLoad_ASSERT(length <= (std::numeric_limits<DWORD>::max)());
 
 		void* address = MapViewOfFile(mappedFile, FILE_MAP_READ, 0, static_cast<DWORD>(offset), static_cast<DWORD>(length));
 		if (address == NULL)
@@ -58,14 +58,14 @@ namespace EasyLoader {
 			BOOL error = UnmapViewOfFile(address);
 			if (error != 0)
 				s_MutexUnmap.unlock();
-			EaseLoad_ASSERT(error != 0);
+			EasyLoad_ASSERT(error != 0);
 			(void)error; // Avoid an unused variable warning
 
 			std::map<void*, HANDLE>::iterator entry = s_MappedAddressToMappedFileObject.find(address);
 			if (entry != s_MappedAddressToMappedFileObject.end())
 			{
 				error = CloseHandle(entry->second);
-				EaseLoad_ASSERT(error != 0);
+				EasyLoad_ASSERT(error != 0);
 			}
 			s_MutexUnmap.unlock();
 		}

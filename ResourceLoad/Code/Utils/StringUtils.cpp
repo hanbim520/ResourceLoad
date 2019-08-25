@@ -8,7 +8,7 @@
 #include "StringUtils.h"
 #include "source/utf8.h"
 
-namespace EaseLoad
+namespace EasyLoad
 {
 namespace utils
 {
@@ -19,7 +19,7 @@ namespace utils
         std::string ret;
 
         va_start(argsToCheckSize, format);
-#if EaseLoad_COMPILER_MSVC
+#if EasyLoad_COMPILER_MSVC
         // MS vsnprintf always returns -1 if string doesn't fit, rather than
         // the needed size. Used their 'special' function instead to get required size
         n = _vscprintf_p(format, argsToCheckSize);
@@ -40,7 +40,7 @@ namespace utils
         n = vsnprintf(&ret[0], ret.size(), format, argsToFormat);
         va_end(argsToFormat);
 
-        EaseLoad_ASSERT(n < (int)ret.size());
+        EasyLoad_ASSERT(n < (int)ret.size());
 
         if (n == -1)
             return NULL;
@@ -60,7 +60,7 @@ namespace utils
         std::string ret;
 
         va_start(argsToCheckSize, max_n);
-#if EaseLoad_COMPILER_MSVC
+#if EasyLoad_COMPILER_MSVC
         // MS vsnprintf always returns -1 if string doesn't fit, rather than
         // the needed size. Used their 'special' function instead to get required size
         n = _vscprintf_p(format, argsToCheckSize);
@@ -83,7 +83,7 @@ namespace utils
         n = vsnprintf(&ret[0], n, format, argsToFormat);
         va_end(argsToFormat);
 
-        EaseLoad_ASSERT(n < ret.size());
+        EasyLoad_ASSERT(n < ret.size());
 
         if (n == -1)
             return NULL;
@@ -128,7 +128,7 @@ namespace utils
 
         size_t length = strlen(strSource) + 1;
 
-        if ((result = (char*)EaseLoad_MALLOC(length)))
+        if ((result = (char*)EasyLoad_MALLOC(length)))
 #ifdef TARGET_WIN
             strcpy_s(result, length, strSource);
 #elif TARGET_UNIX
@@ -151,4 +151,4 @@ namespace utils
         return string.rfind(suffix.c_str(), stringLength - suffixLength, suffixLength) != std::string::npos;
     }
 } /* utils */
-} /* EaseLoad */
+} /* EasyLoad */

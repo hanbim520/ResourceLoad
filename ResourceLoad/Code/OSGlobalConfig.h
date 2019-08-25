@@ -22,42 +22,42 @@ typedef uint16_t EasyCppChar;
 #endif
 #if _MSC_VER
 typedef wchar_t EasyCppNativeChar;
-#define EaseLoad_NATIVE_STRING(str) L##str
+#define EasyLoad_NATIVE_STRING(str) L##str
 #else
 typedef char EasyCppNativeChar;
-#define EaseLoad_NATIVE_STRING(str) str
+#define EasyLoad_NATIVE_STRING(str) str
 #endif
 #if _MSC_VER
-#define EaseLoad_UNREACHABLE __assume(0)
+#define EasyLoad_UNREACHABLE __assume(0)
 #elif __has_builtin(__builtin_unreachable)
-#define EaseLoad_UNREACHABLE __builtin_unreachable()
+#define EasyLoad_UNREACHABLE __builtin_unreachable()
 #else
-#define EaseLoad_UNREACHABLE
+#define EasyLoad_UNREACHABLE
 #endif
 #if defined(_MSC_VER)
-#define EaseLoad_ZERO_LEN_ARRAY 0
+#define EasyLoad_ZERO_LEN_ARRAY 0
 #else
-#define EaseLoad_ZERO_LEN_ARRAY 0
+#define EasyLoad_ZERO_LEN_ARRAY 0
 #endif
 
 #ifdef TARGET_WIN
 #include <crtdbg.h>
-#define EaseLoad_ASSERT(expr) \
+#define EasyLoad_ASSERT(expr) \
     _ASSERTE(expr)
 #else
-#define EaseLoad_ASSERT(expr) \
+#define EasyLoad_ASSERT(expr) \
     assert(expr)
 #endif
 
 
-#define EaseLoad_MALLOC(size) EaseLoad::utils::Memory::Malloc(size)
-#define EaseLoad_MALLOC_ALIGNED(size, alignment) EaseLoad::utils::Memory::AlignedMalloc(size, alignment)
-#define EaseLoad_MALLOC_ZERO(size) EaseLoad::utils::Memory::Calloc(1,size)
-#define EaseLoad_FREE(memory) EaseLoad::utils::Memory::Free(memory)
-#define EaseLoad_FREE_ALIGNED(memory) EaseLoad::utils::Memory::AlignedFree(memory)
-#define EaseLoad_CALLOC(count, size) EaseLoad::utils::Memory::Calloc(count,size)
-#define EaseLoad_REALLOC(memory, newSize) EaseLoad::utils::Memory::Realloc(memory,newSize)
-#define EaseLoad_REALLOC_ALIGNED(memory, newSize, alignment) EaseLoad::utils::Memory::AlignedRealloc(memory, newSize, alignment)
+#define EasyLoad_MALLOC(size) EasyLoad::utils::Memory::Malloc(size)
+#define EasyLoad_MALLOC_ALIGNED(size, alignment) EasyLoad::utils::Memory::AlignedMalloc(size, alignment)
+#define EasyLoad_MALLOC_ZERO(size) EasyLoad::utils::Memory::Calloc(1,size)
+#define EasyLoad_FREE(memory) EasyLoad::utils::Memory::Free(memory)
+#define EasyLoad_FREE_ALIGNED(memory) EasyLoad::utils::Memory::AlignedFree(memory)
+#define EasyLoad_CALLOC(count, size) EasyLoad::utils::Memory::Calloc(count,size)
+#define EasyLoad_REALLOC(memory, newSize) EasyLoad::utils::Memory::Realloc(memory,newSize)
+#define EasyLoad_REALLOC_ALIGNED(memory, newSize, alignment) EasyLoad::utils::Memory::AlignedRealloc(memory, newSize, alignment)
 
 
 #endif /* OSGlobalConfig_h */

@@ -50,7 +50,7 @@ namespace EasyLoader {
 
 		default:
 			assert(false && "Unknown Change open mode");
-			EaseLoad_UNREACHABLE;
+			EasyLoad_UNREACHABLE;
 		}
 	}
 
@@ -97,7 +97,7 @@ namespace EasyLoader {
 	}
 	UnityPalFileAttributes  File::GetFileAttributesEX(const std::string& path, int *error)
 	{
-		const UTF16String utf16Path(EaseLoad::utils::StringUtils::Utf8ToUtf16(path.c_str()));
+		const UTF16String utf16Path(EasyLoad::utils::StringUtils::Utf8ToUtf16(path.c_str()));
 		WIN32_FILE_ATTRIBUTE_DATA fileAttributes;
 
 		BOOL result = ::GetFileAttributesExW((LPCWSTR)utf16Path.c_str(), GetFileExInfoStandard, &fileAttributes);
@@ -124,7 +124,7 @@ namespace EasyLoader {
 
 	FileHandle* File::Open(const std::string& path, int openMode, int accessMode, int shareMode, int options, int *error)
 	{
-		const UTF16String utf16Path(EaseLoad::utils::StringUtils::Utf8ToUtf16(path.c_str()));
+		const UTF16String utf16Path(EasyLoad::utils::StringUtils::Utf8ToUtf16(path.c_str()));
 
 		openMode = ChangeToWindowsOpenMode(openMode);
 		accessMode = ChangeToWindowsAccessMode(accessMode);
@@ -158,8 +158,8 @@ namespace EasyLoader {
 		if (!::ReadFile(handle, dest, count, &bytesRead, NULL))
 			*error = Win32ErrorToErrorCode(::GetLastError());
 
-#if EaseLoad_ENABLE_PROFILER
-		EaseLoad_VM_PROFILE_FILEIO(EaseLoad_PROFILE_FILEIO_READ, count);
+#if EasyLoad_ENABLE_PROFILER
+		EasyLoad_VM_PROFILE_FILEIO(EasyLoad_PROFILE_FILEIO_READ, count);
 #endif
 
 		return bytesRead;
@@ -177,8 +177,8 @@ namespace EasyLoader {
 			*error = GetLastError ();
 			return -1;
 		}*/
-#if EaseLoad_ENABLE_PROFILER
-		EaseLoad_VM_PROFILE_FILEIO(EaseLoad_PROFILE_FILEIO_WRITE, count);
+#if EasyLoad_ENABLE_PROFILER
+		EasyLoad_VM_PROFILE_FILEIO(EasyLoad_PROFILE_FILEIO_WRITE, count);
 #endif
 
 		return written;

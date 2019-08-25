@@ -8,7 +8,7 @@
 #include "Memory.h"
 #include <string>
 
-namespace EaseLoad
+namespace EasyLoad
 {
 namespace utils
 {
@@ -38,7 +38,7 @@ namespace utils
 		}
 	}
 	
-    static EaseLoadMemoryCallbacks s_Callbacks =
+    static EasyLoadMemoryCallbacks s_Callbacks =
     {
         malloc,
 		EasyLoader::Memory::AlignedAlloc,
@@ -49,9 +49,9 @@ namespace utils
 		EasyLoader::Memory::AlignedReAlloc
     };
 
-    void Memory::SetMemoryCallbacks(EaseLoadMemoryCallbacks* callbacks)
+    void Memory::SetMemoryCallbacks(EasyLoadMemoryCallbacks* callbacks)
     {
-        memcpy(&s_Callbacks, callbacks, sizeof(EaseLoadMemoryCallbacks));
+        memcpy(&s_Callbacks, callbacks, sizeof(EasyLoadMemoryCallbacks));
     }
 
     void* Memory::Malloc(size_t size)
@@ -89,4 +89,4 @@ namespace utils
         return s_Callbacks.aligned_realloc_func(memory, newSize, alignment);
     }
 } /* namespace utils */
-} /* namespace EaseLoad */
+} /* namespace EasyLoad */

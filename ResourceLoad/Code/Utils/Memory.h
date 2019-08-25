@@ -7,7 +7,7 @@
 //
 #pragma once
 
-namespace EaseLoad
+namespace EasyLoad
 {
 namespace utils
 {
@@ -20,11 +20,11 @@ namespace utils
 		void* (*calloc_func)(size_t nmemb, size_t size);
 		void* (*realloc_func)(void *ptr, size_t size);
 		void* (*aligned_realloc_func)(void *ptr, size_t size, size_t alignment);
-	} EaseLoadMemoryCallbacks;
+	} EasyLoadMemoryCallbacks;
 
     struct Memory
     {
-        static void SetMemoryCallbacks(EaseLoadMemoryCallbacks* callbacks);
+        static void SetMemoryCallbacks(EasyLoadMemoryCallbacks* callbacks);
 
         static void* Malloc(size_t size);
         static void* AlignedMalloc(size_t size, size_t alignment);
@@ -36,13 +36,13 @@ namespace utils
     };
 	
 } /* namespace utils */
-} /* namespace EaseLoad */
+} /* namespace EasyLoad */
 
-#define EaseLoad_MALLOC(size) EaseLoad::utils::Memory::Malloc(size)
-#define EaseLoad_MALLOC_ALIGNED(size, alignment) EaseLoad::utils::Memory::AlignedMalloc(size, alignment)
-#define EaseLoad_MALLOC_ZERO(size) EaseLoad::utils::Memory::Calloc(1,size)
-#define EaseLoad_FREE(memory) EaseLoad::utils::Memory::Free(memory)
-#define EaseLoad_FREE_ALIGNED(memory) EaseLoad::utils::Memory::AlignedFree(memory)
-#define EaseLoad_CALLOC(count, size) EaseLoad::utils::Memory::Calloc(count,size)
-#define EaseLoad_REALLOC(memory, newSize) EaseLoad::utils::Memory::Realloc(memory,newSize)
-#define EaseLoad_REALLOC_ALIGNED(memory, newSize, alignment) EaseLoad::utils::Memory::AlignedRealloc(memory, newSize, alignment)
+#define EasyLoad_MALLOC(size) EasyLoad::utils::Memory::Malloc(size)
+#define EasyLoad_MALLOC_ALIGNED(size, alignment) EasyLoad::utils::Memory::AlignedMalloc(size, alignment)
+#define EasyLoad_MALLOC_ZERO(size) EasyLoad::utils::Memory::Calloc(1,size)
+#define EasyLoad_FREE(memory) EasyLoad::utils::Memory::Free(memory)
+#define EasyLoad_FREE_ALIGNED(memory) EasyLoad::utils::Memory::AlignedFree(memory)
+#define EasyLoad_CALLOC(count, size) EasyLoad::utils::Memory::Calloc(count,size)
+#define EasyLoad_REALLOC(memory, newSize) EasyLoad::utils::Memory::Realloc(memory,newSize)
+#define EasyLoad_REALLOC_ALIGNED(memory, newSize, alignment) EasyLoad::utils::Memory::AlignedRealloc(memory, newSize, alignment)
