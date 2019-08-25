@@ -9,25 +9,48 @@
 #include "FileHandle.h"
 #include "MemoryMappedFile.hpp"
 #include "File.hpp"
+#include <map>
+
 namespace EasyLoader {
-void* Loader::LoadMetadataFile(const char* fileName)
-{
-    
-    int error = 0;
-    FileHandle* handle = File::Open(fileName, kFileModeOpen, kFileAccessRead, kFileShareRead, kFileOptionsNone, &error);
-    if (error != 0)
-        return NULL;
-    
-    void* fileBuffer = MemoryMappedFile::Map(handle);
-    
-    File::Close(handle, &error);
-    if (error != 0)
-    {
-        MemoryMappedFile::Unmap(fileBuffer);
-        fileBuffer = NULL;
-        return NULL;
-    }
-    
-    return fileBuffer;
-}
+	void* Loader::LoadMetadataFile(const char* fileName)
+	{
+		int error = 0;
+		auto iter = _mmapMomery.find(fileName);
+		if (iter == _mmapMomery.end())
+		{
+			
+			FileHandle* handle = File::Open(fileName, kFileModeOpen, kFileAccessRead, kFileShareRead, kFileOptionsNone, &error);
+			if (error != 0)
+				return NULL;
+
+			void* fileBuffer = MemoryMappedFile::Map(handle);
+
+			File::Close(handle, &error);
+			if (error != 0)
+			{
+				MemoryMappedFile::Unmap(fileBuffer);
+				fileBuffer = NULL;
+				return NULL;
+			}
+			_mmapMomery.insert(std::pair<const char*, void*>(fileName, fileBuffer));
+			return fileBuffer;
+		}
+		else {
+			return iter->second;
+		}
+	}
+	void Loader::UnLoadMetadataFile(const char* fileName)
+	{
+		int error = 0;
+		auto iter = _mmapMomery.find(fileName);
+		if (iter == _mmapMomery.end())
+		{
+			
+			return ;
+		}
+		else {
+			MemoryMappedFile::Unmap(iter->second);
+			iter->second = NULL;
+		}
+	}
 }

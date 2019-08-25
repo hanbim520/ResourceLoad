@@ -36,6 +36,7 @@ namespace EasyLoader {
 		void* address = MapViewOfFile(mappedFile, FILE_MAP_READ, 0, static_cast<DWORD>(offset), static_cast<DWORD>(length));
 		if (address == NULL)
 		{
+
 			DWORD error = GetLastError();
 			CloseHandle(mappedFile);
 			s_MutexMap.unlock();

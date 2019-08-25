@@ -10,11 +10,17 @@
 #define Loader_hpp
 
 #include <stdio.h>
+#include <map>
+
+#include "FileHandle.h"
 
 namespace EasyLoader {
     class Loader{
+	private: 
+		std::map<const char*, void*> _mmapMomery;
     public:
         void* LoadMetadataFile(const char* fileName);
+		void UnLoadMetadataFile(const char* fileName);
     };
 }
 

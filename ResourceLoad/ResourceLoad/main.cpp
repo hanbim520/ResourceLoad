@@ -14,13 +14,13 @@
 
 #include "../Code/Loader.hpp"
 
+EasyLoader::Loader *_loader = new  EasyLoader::Loader();
 void DoTest()
 {
 	clock_t start, finish;
 	double totaltime;
 	std::mutex mMutext;
 
-	EasyLoader::Loader *_loader = new  EasyLoader::Loader();
 
 	start = clock();
 	for (int i = 0; i < 1000; ++i)
@@ -39,7 +39,7 @@ void DoTest()
 	finish = clock();
 	totaltime = (double)(finish - start) / CLOCKS_PER_SEC;
 	std::cout << "mmap cost time: " << totaltime << " ms" << std::endl;
-
+	return;
 	// std::cout << content;
 	char data[1000000];
 	std::ifstream infile;
