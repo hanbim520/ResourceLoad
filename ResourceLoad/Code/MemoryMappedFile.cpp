@@ -5,7 +5,7 @@
 //  Created by 张海军 on 8/2/19.
 //  Copyright © 2019 张海军. All rights reserved.
 //
-
+#ifdef  TARGET_UNIX
 #include "MemoryMappedFile.hpp"
 
 #include <mutex>
@@ -87,3 +87,4 @@ void MemoryMappedFile::Unmap(void* address, size_t length)
 }
 }
 
+#endif

@@ -22,6 +22,7 @@ public:
     static  ErrorCode FileErrnoToErrorCode(int32_t code);
     static  ErrorCode PathErrnoToErrorCode(const std::string& path, int32_t code);
    
+	static UnityPalFileAttributes GetFileAttributesEX(const std::string& path, int* error);
     
     static FileHandle* Open(const std::string& path, int mode, int accessMode, int shareMode, int options, int *error);
     static bool Close(FileHandle* handle, int *error);

@@ -9,10 +9,9 @@
 #ifndef MemoryMappedFile_hpp
 #define MemoryMappedFile_hpp
 
-#include <stdio.h>
-
 #include "OSGlobalEnums.h"
 #include "FileHandle.h"
+
 
 namespace EasyLoader {
 class MemoryMappedFile{

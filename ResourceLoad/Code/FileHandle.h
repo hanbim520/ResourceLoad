@@ -9,8 +9,7 @@
 #ifndef FileHandle_h
 #define FileHandle_h
 #include <string>
-#include <sys/stat.h>
-#include <sys/types.h>
+
 
 #include "OSGlobalEnums.h"
 
@@ -37,5 +36,4 @@ struct FileHandle
     }
 };
 }
-
 #endif /* FileHandle_h */

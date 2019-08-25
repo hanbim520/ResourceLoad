@@ -5,6 +5,7 @@
 //  Created by 张海军 on 8/2/19.
 //  Copyright © 2019 张海军. All rights reserved.
 //
+#ifdef  TARGET_UNIX
 
 #include <sys/errno.h>
 #include <sys/fcntl.h>
@@ -627,3 +628,4 @@ ErrorCode File::PathErrnoToErrorCode(const std::string& path, int32_t code)
 
 }
 
+#endif //  IOS || ANDROID
