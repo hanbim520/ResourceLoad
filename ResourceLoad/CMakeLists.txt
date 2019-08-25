@@ -10,23 +10,40 @@ aux_source_directory(. DIR_SRCS)
 
 # 添加 math 子目录
 add_subdirectory(Code)
-
-# 指定生成目标 
-add_executable(EasyLoader ./ResourceLoad/main.cpp)
-
 # include directories
 INCLUDE_DIRECTORIES(
   ${PROJECT_SOURCE_DIR}/include
   ${PROJECT_SOURCE_DIR}/Code
+  ${PROJECT_SOURCE_DIR}/Protobuf
+  ${PROJECT_SOURCE_DIR}/Sqlite/source
 )
-
 # lib directories
 LINK_DIRECTORIES(
-  ${PROJECT_BINARY_DIR}/lib
+  ${PROJECT_SOURCE_DIR}/../Protobuf/Lib
+  ${PROJECT_SOURCE_DIR}/Sqlite/Lib
 )
-TARGET_LINK_LIBRARIES(EasyLoader EasyLoaderLibrary)
+#指定protobuf
+include_directories(${PROJECT_SOURCE_DIR}/protobuf)
+link_directories(${PROJECT_SOURCE_DIR}/Protobuf/Lib)
+#sqlite3
+include_directories(${PROJECT_SOURCE_DIR}/Sqlite/source)
+link_directories(${PROJECT_SOURCE_DIR}/Sqlite/Lib)
+
+# 指定生成目标 
+add_executable(EasyLoader ./ResourceLoad/main.cpp
+			./ResourceLoad/DataInfoProto.pb.cc )
+
+
+TARGET_LINK_LIBRARIES(EasyLoader 
+	EasyLoaderLibrary
+	libprotobuf.lib
+	Sqlite3.lib
+	)
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
+
+
+
 
 MESSAGE(STSTUS "###################################")
 
