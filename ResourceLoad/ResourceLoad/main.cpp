@@ -16,6 +16,7 @@
 #include "../Code/Loader.hpp"
 #include "DataInfoProto.pb.h"
 
+static std::string fileName = "I:/Github/ResourceLoad/ClientLog.txt";
 bool hasWrite = false;
 
 void WriteFile(JxSDK::DataInfo datas)
@@ -39,7 +40,7 @@ void DoTest()
 	for (int i = 0; i < 1000; ++i)
 	{
 #if TARGET_WIN
-		void* file = _loader->LoadMetadataFile("I:/Github/ResourceLoad/ClientLog.txt");
+		void* file = _loader->LoadMetadataFile(fileName.c_str());
 		//	char* content = (char *)file;
 		JxSDK::DataInfo dataTmp;
 		dataTmp.ParseFromArray(file, sizeof(JxSDK::DataInfo));
@@ -50,11 +51,11 @@ void DoTest()
 
 
 	}
-
+	
 	finish = clock();
 	totaltime = (double)(finish - start) / CLOCKS_PER_SEC;
 	std::cout << "mmap cost time: " << totaltime << " ms" << std::endl;
-	
+	return;
 	// std::cout << content;
 	char data[1000000];
 	std::ifstream infile;
@@ -63,7 +64,7 @@ void DoTest()
 		memset(data, 0, 1000000);
 #if TARGET_WIN
 		mMutext.lock();
-		infile.open("I:/Github/ResourceLoad/1.mkv");
+		infile.open(fileName);
 		mMutext.unlock();
 		//	infile >> data;
 #else
@@ -102,5 +103,6 @@ int main(int argc, const char * argv[]) {
 		DoTest();
 	}
     getchar();
+	_loader->UnLoadMetadataFile(fileName.c_str());
     return 0;
 }
