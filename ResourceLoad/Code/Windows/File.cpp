@@ -21,16 +21,16 @@
 
 
 namespace EasyLoader {
-	typedef std::basic_string<Il2CppChar> UTF16String;
-	typedef std::basic_string<Il2CppNativeChar> Il2CppNativeString;
+	typedef std::basic_string<EasyCppChar> UTF16String;
+	typedef std::basic_string<EasyCppNativeChar> EasyCppNativeString;
 
 	static inline int Win32ErrorToErrorCode(DWORD win32ErrorCode)
 	{
 		return win32ErrorCode;
 	}
-	static inline int MonoToWindowsOpenMode(int monoOpenMode)
+	static inline int ChangeToWindowsOpenMode(int ChangeOpenMode)
 	{
-		switch (monoOpenMode)
+		switch (ChangeOpenMode)
 		{
 		case kFileModeCreateNew:
 			return CREATE_NEW;
@@ -49,14 +49,14 @@ namespace EasyLoader {
 			return TRUNCATE_EXISTING;
 
 		default:
-			assert(false && "Unknown mono open mode");
-			IL2CPP_UNREACHABLE;
+			assert(false && "Unknown Change open mode");
+			EaseLoad_UNREACHABLE;
 		}
 	}
 
-	static inline int MonoToWindowsAccessMode(int monoAccessMode)
+	static inline int ChangeToWindowsAccessMode(int ChangeAccessMode)
 	{
-		switch (monoAccessMode)
+		switch (ChangeAccessMode)
 		{
 		case kFileAccessRead:
 			return GENERIC_READ;
@@ -71,7 +71,7 @@ namespace EasyLoader {
 			return 0;
 		}
 	}
-	static inline DWORD MonoOptionsToWindowsFlagsAndAttributes(const std::string& path, int options)
+	static inline DWORD ChangeOptionsToWindowsFlagsAndAttributes(const std::string& path, int options)
 	{
 		DWORD flagsAndAttributes;
 
@@ -97,7 +97,7 @@ namespace EasyLoader {
 	}
 	UnityPalFileAttributes  File::GetFileAttributesEX(const std::string& path, int *error)
 	{
-		const UTF16String utf16Path(il2cpp::utils::StringUtils::Utf8ToUtf16(path.c_str()));
+		const UTF16String utf16Path(EaseLoad::utils::StringUtils::Utf8ToUtf16(path.c_str()));
 		WIN32_FILE_ATTRIBUTE_DATA fileAttributes;
 
 		BOOL result = ::GetFileAttributesExW((LPCWSTR)utf16Path.c_str(), GetFileExInfoStandard, &fileAttributes);
@@ -124,11 +124,11 @@ namespace EasyLoader {
 
 	FileHandle* File::Open(const std::string& path, int openMode, int accessMode, int shareMode, int options, int *error)
 	{
-		const UTF16String utf16Path(il2cpp::utils::StringUtils::Utf8ToUtf16(path.c_str()));
+		const UTF16String utf16Path(EaseLoad::utils::StringUtils::Utf8ToUtf16(path.c_str()));
 
-		openMode = MonoToWindowsOpenMode(openMode);
-		accessMode = MonoToWindowsAccessMode(accessMode);
-		DWORD flagsAndAttributes = MonoOptionsToWindowsFlagsAndAttributes(path, options);
+		openMode = ChangeToWindowsOpenMode(openMode);
+		accessMode = ChangeToWindowsAccessMode(accessMode);
+		DWORD flagsAndAttributes = ChangeOptionsToWindowsFlagsAndAttributes(path, options);
 
 		HANDLE handle = ::CreateFileW((LPCWSTR)utf16Path.c_str(), accessMode, shareMode, NULL, openMode, flagsAndAttributes, NULL);
 
@@ -158,8 +158,8 @@ namespace EasyLoader {
 		if (!::ReadFile(handle, dest, count, &bytesRead, NULL))
 			*error = Win32ErrorToErrorCode(::GetLastError());
 
-#if IL2CPP_ENABLE_PROFILER
-		IL2CPP_VM_PROFILE_FILEIO(IL2CPP_PROFILE_FILEIO_READ, count);
+#if EaseLoad_ENABLE_PROFILER
+		EaseLoad_VM_PROFILE_FILEIO(EaseLoad_PROFILE_FILEIO_READ, count);
 #endif
 
 		return bytesRead;
@@ -177,8 +177,8 @@ namespace EasyLoader {
 			*error = GetLastError ();
 			return -1;
 		}*/
-#if IL2CPP_ENABLE_PROFILER
-		IL2CPP_VM_PROFILE_FILEIO(IL2CPP_PROFILE_FILEIO_WRITE, count);
+#if EaseLoad_ENABLE_PROFILER
+		EaseLoad_VM_PROFILE_FILEIO(EaseLoad_PROFILE_FILEIO_WRITE, count);
 #endif
 
 		return written;

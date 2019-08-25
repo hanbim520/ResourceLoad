@@ -39,7 +39,7 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
 	MESSAGE(STATUS "current platform: Windows")
 	add_definitions(
         -D TARGET_WIN
-		-D IL2CPP_TARGET_WINDOWS
+		-D EaseLoad_TARGET_WINDOWS
 		-D _DEBUG
     )
 ELSEIF (CMAKE_SYSTEM_NAME MATCHES "FreeBSD")

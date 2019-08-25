@@ -27,3 +27,27 @@ LINK_DIRECTORIES(
 TARGET_LINK_LIBRARIES(EasyLoader EasyLoaderLibrary)
 SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
+
+MESSAGE(STSTUS "###################################")
+
+MESSAGE(STATUS "operation system is ${CMAKE_SYSTEM}")
+
+IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
+	MESSAGE(STATUS "current platform: Linux ")
+	add_definitions(
+        -D TARGET_UNIX
+    )
+ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
+	MESSAGE(STATUS "current platform: Windows")
+	add_definitions(
+        -D TARGET_WIN
+		-D EaseLoad_TARGET_WINDOWS
+		-D _DEBUG
+    )
+ELSEIF (CMAKE_SYSTEM_NAME MATCHES "FreeBSD")
+	MESSAGE(STATUS "current platform: FreeBSD")
+ELSE ()
+	MESSAGE(STATUS "other platform: ${CMAKE_SYSTEM_NAME}")
+ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux")
+
+MESSAGE(STSTUS "###################################")

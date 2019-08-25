@@ -14,50 +14,50 @@
 // #define TARGET_WIN (TARGET_WIN32)
 
 #if _MSC_VER
-typedef wchar_t Il2CppChar;
+typedef wchar_t EasyCppChar;
 #elif __has_feature(cxx_unicode_literals)
-typedef char16_t Il2CppChar;
+typedef char16_t EasyCppChar;
 #else
-typedef uint16_t Il2CppChar;
+typedef uint16_t EasyCppChar;
 #endif
 #if _MSC_VER
-typedef wchar_t Il2CppNativeChar;
-#define IL2CPP_NATIVE_STRING(str) L##str
+typedef wchar_t EasyCppNativeChar;
+#define EaseLoad_NATIVE_STRING(str) L##str
 #else
-typedef char Il2CppNativeChar;
-#define IL2CPP_NATIVE_STRING(str) str
+typedef char EasyCppNativeChar;
+#define EaseLoad_NATIVE_STRING(str) str
 #endif
 #if _MSC_VER
-#define IL2CPP_UNREACHABLE __assume(0)
+#define EaseLoad_UNREACHABLE __assume(0)
 #elif __has_builtin(__builtin_unreachable)
-#define IL2CPP_UNREACHABLE __builtin_unreachable()
+#define EaseLoad_UNREACHABLE __builtin_unreachable()
 #else
-#define IL2CPP_UNREACHABLE
+#define EaseLoad_UNREACHABLE
 #endif
 #if defined(_MSC_VER)
-#define IL2CPP_ZERO_LEN_ARRAY 0
+#define EaseLoad_ZERO_LEN_ARRAY 0
 #else
-#define IL2CPP_ZERO_LEN_ARRAY 0
+#define EaseLoad_ZERO_LEN_ARRAY 0
 #endif
 
 #ifdef TARGET_WIN
 #include <crtdbg.h>
-#define IL2CPP_ASSERT(expr) \
+#define EaseLoad_ASSERT(expr) \
     _ASSERTE(expr)
 #else
-#define IL2CPP_ASSERT(expr) \
+#define EaseLoad_ASSERT(expr) \
     assert(expr)
 #endif
 
 
-#define IL2CPP_MALLOC(size) il2cpp::utils::Memory::Malloc(size)
-#define IL2CPP_MALLOC_ALIGNED(size, alignment) il2cpp::utils::Memory::AlignedMalloc(size, alignment)
-#define IL2CPP_MALLOC_ZERO(size) il2cpp::utils::Memory::Calloc(1,size)
-#define IL2CPP_FREE(memory) il2cpp::utils::Memory::Free(memory)
-#define IL2CPP_FREE_ALIGNED(memory) il2cpp::utils::Memory::AlignedFree(memory)
-#define IL2CPP_CALLOC(count, size) il2cpp::utils::Memory::Calloc(count,size)
-#define IL2CPP_REALLOC(memory, newSize) il2cpp::utils::Memory::Realloc(memory,newSize)
-#define IL2CPP_REALLOC_ALIGNED(memory, newSize, alignment) il2cpp::utils::Memory::AlignedRealloc(memory, newSize, alignment)
+#define EaseLoad_MALLOC(size) EaseLoad::utils::Memory::Malloc(size)
+#define EaseLoad_MALLOC_ALIGNED(size, alignment) EaseLoad::utils::Memory::AlignedMalloc(size, alignment)
+#define EaseLoad_MALLOC_ZERO(size) EaseLoad::utils::Memory::Calloc(1,size)
+#define EaseLoad_FREE(memory) EaseLoad::utils::Memory::Free(memory)
+#define EaseLoad_FREE_ALIGNED(memory) EaseLoad::utils::Memory::AlignedFree(memory)
+#define EaseLoad_CALLOC(count, size) EaseLoad::utils::Memory::Calloc(count,size)
+#define EaseLoad_REALLOC(memory, newSize) EaseLoad::utils::Memory::Realloc(memory,newSize)
+#define EaseLoad_REALLOC_ALIGNED(memory, newSize, alignment) EaseLoad::utils::Memory::AlignedRealloc(memory, newSize, alignment)
 
 
 #endif /* OSGlobalConfig_h */

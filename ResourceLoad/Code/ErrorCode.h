@@ -915,7 +915,7 @@ enum ErrorCode
     kErrorHostNodeNotResourceOwner = 5015,
     kErrorHostNodeNotGroupOwner = 5016,
     kErrorResmonCreateFailed = 5017,
-    kErrorResmonOnlineFailed = 5018,
+    kErrorResChangenlineFailed = 5018,
     kErrorResourceOnline = 5019,
     kErrorQuorumResource = 5020,
     kErrorNotQuorumCapable = 5021,

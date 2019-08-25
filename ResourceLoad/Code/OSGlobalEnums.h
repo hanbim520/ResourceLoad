@@ -35,7 +35,7 @@ typedef enum
     kFileAttributeNot_content_indexed = 0x00002000,
     kFileAttributeEncrypted = 0x00004000,
     kFileAttributeVirtual = 0x00010000,
-    kFileAttributeInternalMonoExecutable = 0x80000000 // Only used internally by Mono
+    kFileAttributeInternalChangeExecutable = 0x80000000 // Only used internally by Change
 } UnityPalFileAttributes;
 
 typedef enum

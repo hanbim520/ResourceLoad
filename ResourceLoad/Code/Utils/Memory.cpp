@@ -1,7 +1,7 @@
 #include "Memory.h"
 #include <string>
 
-namespace il2cpp
+namespace EaseLoad
 {
 namespace utils
 {
@@ -31,7 +31,7 @@ namespace utils
 		}
 	}
 	
-    static Il2CppMemoryCallbacks s_Callbacks =
+    static EaseLoadMemoryCallbacks s_Callbacks =
     {
         malloc,
 		EasyLoader::Memory::AlignedAlloc,
@@ -42,9 +42,9 @@ namespace utils
 		EasyLoader::Memory::AlignedReAlloc
     };
 
-    void Memory::SetMemoryCallbacks(Il2CppMemoryCallbacks* callbacks)
+    void Memory::SetMemoryCallbacks(EaseLoadMemoryCallbacks* callbacks)
     {
-        memcpy(&s_Callbacks, callbacks, sizeof(Il2CppMemoryCallbacks));
+        memcpy(&s_Callbacks, callbacks, sizeof(EaseLoadMemoryCallbacks));
     }
 
     void* Memory::Malloc(size_t size)
@@ -82,4 +82,4 @@ namespace utils
         return s_Callbacks.aligned_realloc_func(memory, newSize, alignment);
     }
 } /* namespace utils */
-} /* namespace il2cpp */
+} /* namespace EaseLoad */

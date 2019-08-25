@@ -35,14 +35,14 @@
 #include "../OSGlobalConfig.h"
 
 
-namespace il2cpp
+namespace EaseLoad
 {
 namespace utils
 {
 #include <string>
 
-	typedef std::basic_string<Il2CppChar> UTF16String;
-	typedef std::basic_string<Il2CppNativeChar> Il2CppNativeString;
+	typedef std::basic_string<EasyCppChar> UTF16String;
+	typedef std::basic_string<EasyCppNativeChar> EasyCppNativeString;
     class  StringUtils
     {
     public:
@@ -77,7 +77,7 @@ namespace utils
         template<typename CharType>
         static inline size_t Hash(const CharType *str, size_t length)
         {
-            IL2CPP_ASSERT(length <= static_cast<size_t>(std::numeric_limits<int>::max()));
+            EaseLoad_ASSERT(length <= static_cast<size_t>(std::numeric_limits<int>::max()));
 
             size_t hash1 = 5381;
             size_t hash2 = hash1;
@@ -143,22 +143,22 @@ namespace utils
         };
     };
 } /* utils */
-} /* il2cpp */
+} /* EaseLoad */
 
 // Assumes str is not NULL
 #if defined(_MSC_VER)
-#define DECLARE_IL2CPP_STRING_AS_STRING_VIEW_OF_NATIVE_CHARS(variableName, str) \
-    il2cpp::utils::StringView<Il2CppNativeChar> variableName(reinterpret_cast<Il2CppString*>(str)->chars, reinterpret_cast<Il2CppString*>(str)->length);
-#define DECLARE_NATIVE_C_STRING_AS_STRING_VIEW_OF_IL2CPP_CHARS(variableName, str) \
-    il2cpp::utils::StringView<Il2CppChar> variableName(str, wcslen(str));
-#define DECLARE_NATIVE_STRING_AS_STRING_VIEW_OF_IL2CPP_CHARS(variableName, str) \
-    il2cpp::utils::StringView<Il2CppChar> variableName(str);
+#define DECLARE_EaseLoad_STRING_AS_STRING_VIEW_OF_NATIVE_CHARS(variableName, str) \
+    EaseLoad::utils::StringView<EasyCppNativeChar> variableName(reinterpret_cast<EaseLoadString*>(str)->chars, reinterpret_cast<EaseLoadString*>(str)->length);
+#define DECLARE_NATIVE_C_STRING_AS_STRING_VIEW_OF_EaseLoad_CHARS(variableName, str) \
+    EaseLoad::utils::StringView<EasyCppChar> variableName(str, wcslen(str));
+#define DECLARE_NATIVE_STRING_AS_STRING_VIEW_OF_EaseLoad_CHARS(variableName, str) \
+    EaseLoad::utils::StringView<EasyCppChar> variableName(str);
 #else
-#define DECLARE_IL2CPP_STRING_AS_STRING_VIEW_OF_NATIVE_CHARS(variableName, str) \
-    Il2CppNativeString variableName##_native_string_storage = il2cpp::utils::StringUtils::Utf16ToUtf8(reinterpret_cast<Il2CppString*>(str)->chars, reinterpret_cast<Il2CppString*>(str)->length); \
-    il2cpp::utils::StringView<Il2CppNativeChar> variableName(variableName##_native_string_storage.c_str(), variableName##_native_string_storage.length());
-#define DECLARE_NATIVE_C_STRING_AS_STRING_VIEW_OF_IL2CPP_CHARS(variableName, str) \
-    UTF16String variableName##_utf16String = il2cpp::utils::StringUtils::Utf8ToUtf16(str); \
-    il2cpp::utils::StringView<Il2CppChar> variableName(variableName##_utf16String);
-#define DECLARE_NATIVE_STRING_AS_STRING_VIEW_OF_IL2CPP_CHARS DECLARE_NATIVE_C_STRING_AS_STRING_VIEW_OF_IL2CPP_CHARS
+#define DECLARE_EaseLoad_STRING_AS_STRING_VIEW_OF_NATIVE_CHARS(variableName, str) \
+    EasyCppNativeString variableName##_native_string_storage = EaseLoad::utils::StringUtils::Utf16ToUtf8(reinterpret_cast<EaseLoadString*>(str)->chars, reinterpret_cast<EaseLoadString*>(str)->length); \
+    EaseLoad::utils::StringView<EasyCppNativeChar> variableName(variableName##_native_string_storage.c_str(), variableName##_native_string_storage.length());
+#define DECLARE_NATIVE_C_STRING_AS_STRING_VIEW_OF_EaseLoad_CHARS(variableName, str) \
+    UTF16String variableName##_utf16String = EaseLoad::utils::StringUtils::Utf8ToUtf16(str); \
+    EaseLoad::utils::StringView<EasyCppChar> variableName(variableName##_utf16String);
+#define DECLARE_NATIVE_STRING_AS_STRING_VIEW_OF_EaseLoad_CHARS DECLARE_NATIVE_C_STRING_AS_STRING_VIEW_OF_EaseLoad_CHARS
 #endif
