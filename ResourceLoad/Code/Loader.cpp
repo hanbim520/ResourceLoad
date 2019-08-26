@@ -14,7 +14,7 @@
 namespace EasyLoader {
 	void* Loader::LoadMetadataFile(const char* fileName)
 	{
-		if (fileName == nullptr)return;
+		if (fileName == nullptr)return NULL;
 		int error = 0;
 		auto iter = _mmapMomery.find(fileName);
 		if (iter == _mmapMomery.end())
