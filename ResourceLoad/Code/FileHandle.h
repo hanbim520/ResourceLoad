@@ -9,8 +9,9 @@
 #ifndef FileHandle_h
 #define FileHandle_h
 #include <string>
+#ifdef TARGET_UNIX
 #include <sys/types.h>
-
+#endif
 #include "OSGlobalEnums.h"
 
 namespace EasyLoader {
