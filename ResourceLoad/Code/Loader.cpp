@@ -14,6 +14,7 @@
 namespace EasyLoader {
 	void* Loader::LoadMetadataFile(const char* fileName)
 	{
+		if (fileName == nullptr)return;
 		int error = 0;
 		auto iter = _mmapMomery.find(fileName);
 		if (iter == _mmapMomery.end())
@@ -41,16 +42,18 @@ namespace EasyLoader {
 	}
 	void Loader::UnLoadMetadataFile(const char* fileName)
 	{
+		if (fileName == nullptr)return;
 		int error = 0;
 		auto iter = _mmapMomery.find(fileName);
 		if (iter == _mmapMomery.end())
 		{
-			
 			return ;
 		}
 		else {
 			MemoryMappedFile::Unmap(iter->second);
 			iter->second = NULL;
+			_mmapMomery.erase(fileName);
 		}
+		
 	}
 }
