@@ -158,10 +158,6 @@ namespace EasyLoader {
 		if (!::ReadFile(handle, dest, count, &bytesRead, NULL))
 			*error = Win32ErrorToErrorCode(::GetLastError());
 
-#if EasyLoad_ENABLE_PROFILER
-		EasyLoad_VM_PROFILE_FILEIO(EasyLoad_PROFILE_FILEIO_READ, count);
-#endif
-
 		return bytesRead;
 	}
 
@@ -177,9 +173,6 @@ namespace EasyLoader {
 			*error = GetLastError ();
 			return -1;
 		}*/
-#if EasyLoad_ENABLE_PROFILER
-		EasyLoad_VM_PROFILE_FILEIO(EasyLoad_PROFILE_FILEIO_WRITE, count);
-#endif
 
 		return written;
 	}
