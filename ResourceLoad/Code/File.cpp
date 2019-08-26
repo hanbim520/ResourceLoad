@@ -9,6 +9,7 @@
 
 #include <sys/errno.h>
 #include <sys/fcntl.h>
+#include <sys/stat.h>
 #include <unistd.h>
 #include <mutex>
 

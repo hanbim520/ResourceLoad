@@ -9,7 +9,7 @@
 #ifndef FileHandle_h
 #define FileHandle_h
 #include <string>
-
+#include <sys/types.h>
 
 #include "OSGlobalEnums.h"
 

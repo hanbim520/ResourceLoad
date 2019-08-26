@@ -14,11 +14,13 @@
 #include <cstddef>
 
 #include "../Code/Loader.hpp"
-#include "DataInfoProto.pb.h"
-
+#ifdef TARGET_WIN
+//#include "DataInfoProto.pb.h"
+#endif
 static std::string fileName = "I:/Github/ResourceLoad/ClientLog.txt";
 bool hasWrite = false;
 
+#ifdef TARGET_WIN
 void WriteFile(JxSDK::DataInfo datas)
 {
 	std::string szFileName = "../ClientLog.txt";
@@ -28,6 +30,7 @@ void WriteFile(JxSDK::DataInfo datas)
 	output.close();
 	hasWrite = true;
 }
+#endif
 EasyLoader::Loader *_loader = new  EasyLoader::Loader();
 void DoTest()
 {
@@ -79,6 +82,7 @@ void DoTest()
 	totaltime = (double)(finish - start) / CLOCKS_PER_SEC;
 	std::cout << "normal cost time: " << totaltime << " ms"<< std::endl;
 	
+#ifdef TARGET_WIN
 	if (hasWrite)return;
 	JxSDK::DataInfo dataPb;
 	dataPb.set_mapstr("fdfdsafaddfaas");
@@ -94,6 +98,7 @@ void DoTest()
 	JxSDK::DataInfo dataTmp;
 	dataTmp.ParseFromArray(pData, sizeof(JxSDK::DataInfo));
 	WriteFile(dataTmp);
+#endif
 }
 
 
