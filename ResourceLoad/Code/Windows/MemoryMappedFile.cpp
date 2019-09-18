@@ -56,8 +56,6 @@ namespace EasyLoader {
 			s_MutexUnmap.lock();
 
 			BOOL error = UnmapViewOfFile(address);
-			if (error != 0)
-				s_MutexUnmap.unlock();
 			EasyLoad_ASSERT(error != 0);
 			(void)error; // Avoid an unused variable warning
 
