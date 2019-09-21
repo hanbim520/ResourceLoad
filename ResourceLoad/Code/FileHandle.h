@@ -36,5 +36,10 @@ struct FileHandle
     {
     }
 };
+struct MapHandle
+{
+	int length;
+	void* ptr;
+};
 }
 #endif /* FileHandle_h */

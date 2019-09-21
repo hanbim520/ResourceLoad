@@ -16,7 +16,8 @@ namespace EasyLoader {
 	{
 		if (fileName == nullptr)return NULL;
 		int error = 0;
-		auto iter = _mmapMomery.find(fileName);
+		size_t strHash = ptr_hash((char*)fileName);
+		auto iter = _mmapMomery.find(strHash);
 		if (iter == _mmapMomery.end())
 		{
 			
@@ -33,27 +34,72 @@ namespace EasyLoader {
 				fileBuffer = NULL;
 				return NULL;
 			}
-			_mmapMomery.insert(std::pair<const char*, void*>(fileName, fileBuffer));
+			MapHandle mapHandle;
+			mapHandle.length = strlen((char *)fileBuffer);
+			mapHandle.ptr = fileBuffer;
+			_mmapMomery.insert(std::pair<size_t, MapHandle>(strHash, mapHandle));
 			return fileBuffer;
 		}
 		else {
-			return iter->second;
+			return iter->second.ptr;
 		}
 	}
 	void Loader::UnLoadMetadataFile(const char* fileName)
 	{
 		if (fileName == nullptr)return;
 		int error = 0;
-		auto iter = _mmapMomery.find(fileName);
+		size_t strHash = ptr_hash((char*)fileName);
+		auto iter = _mmapMomery.find(strHash);
 		if (iter == _mmapMomery.end())
 		{
 			return ;
 		}
 		else {
-			MemoryMappedFile::Unmap(iter->second);
-			iter->second = NULL;
-			_mmapMomery.erase(fileName);
+			MemoryMappedFile::Unmap(iter->second.ptr);
+			iter->second.ptr = nullptr;
+			_mmapMomery.erase(strHash);
 		}
 		
+	}
+
+	int Loader::GetMetadataFileLength(const char* fileName)
+	{
+		size_t strHash = ptr_hash((char*)fileName);
+		auto iter = _mmapMomery.find(strHash);
+		if (iter == _mmapMomery.end())
+		{
+			return 0;
+		}
+		return iter->second.length;
+	}
+}
+
+extern "C" {
+	EasyLoader::Loader *loader = nullptr;
+	void Init() {
+		loader = new EasyLoader::Loader();
+	}
+	void Release()
+	{
+		if (loader != nullptr)
+		{
+			delete(loader);
+			loader = nullptr;
+		}
+	}
+	void *LoadMetadataFile(const char *fileName) 
+	{
+		if (loader == nullptr)return nullptr;
+		return  loader->LoadMetadataFile(fileName);
+	}
+	void UnLoadMetadataFile(const char *fileName)
+	{
+		if (loader == nullptr)return ;
+		return loader->UnLoadMetadataFile(fileName);
+	}
+	int GetMetadataFileLength(const char* fileName)
+	{
+		if (loader == nullptr)return 0;
+		return loader->GetMetadataFileLength(fileName);
 	}
 }

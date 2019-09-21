@@ -17,20 +17,9 @@
 #ifdef TARGET_WIN
 //#include "DataInfoProto.pb.h"
 #endif
-static std::string fileName = "I:/Github/ResourceLoad/ClientLog.txt";
+static std::string fileName = "D:/abc.txt";
 bool hasWrite = false;
 
-#ifdef TARGET_WIN
-void WriteFile(JxSDK::DataInfo datas)
-{
-	std::string szFileName = "../ClientLog.txt";
-	std::fstream output(szFileName, std::ios::out | std::ios::binary | std::ios::app);
-	datas.SerializePartialToOstream(&output);
-	output.flush();
-	output.close();
-	hasWrite = true;
-}
-#endif
 EasyLoader::Loader *_loader = new  EasyLoader::Loader();
 void DoTest()
 {
@@ -40,20 +29,8 @@ void DoTest()
 
 
 	start = clock();
-	for (int i = 0; i < 1000; ++i)
-	{
-#if TARGET_WIN
-		void* file = _loader->LoadMetadataFile(fileName.c_str());
-		//	char* content = (char *)file;
-		JxSDK::DataInfo dataTmp;
-		dataTmp.ParseFromArray(file, sizeof(JxSDK::DataInfo));
-#else
-		void* file = _loader->LoadMetadataFile("/Users/zhanghaijun/Desktop/TENCENT_MSDKUnity_ALL_3.2.27.1_99388.zip");
-		char* content = (char *)file;
-#endif
-
-
-	}
+	void* file = _loader->LoadMetadataFile(fileName.c_str());
+	char* content = (char *)file;
 	
 	finish = clock();
 	totaltime = (double)(finish - start) / CLOCKS_PER_SEC;
@@ -82,31 +59,11 @@ void DoTest()
 	totaltime = (double)(finish - start) / CLOCKS_PER_SEC;
 	std::cout << "normal cost time: " << totaltime << " ms"<< std::endl;
 	
-#ifdef TARGET_WIN
-	if (hasWrite)return;
-	JxSDK::DataInfo dataPb;
-	dataPb.set_mapstr("fdfdsafaddfaas");
-	dataPb.set_width(1024);
-	dataPb.set_height(512);
-	dataPb.set_size(1022);
-	std::cout << sizeof(JxSDK::DataInfo) << std::endl;
-	char * pData = new char[sizeof(JxSDK::DataInfo)];
-	dataPb.SerializePartialToArray(pData, sizeof(JxSDK::DataInfo));
-	if (sizeof(pData) == 0)
-		std::cout << "error" << std::endl;
-	//byte * pData2 = new byte[sizeof DataInfo];
-	JxSDK::DataInfo dataTmp;
-	dataTmp.ParseFromArray(pData, sizeof(JxSDK::DataInfo));
-	WriteFile(dataTmp);
-#endif
 }
 
 
 int main(int argc, const char * argv[]) {
-	char ch = getchar();
-	while (std::cin >> ch) {  //输入没有结束，cin 就返回 true，条件就为真
-		DoTest();
-	}
+	DoTest();
     getchar();
 	_loader->UnLoadMetadataFile(fileName.c_str());
     return 0;
