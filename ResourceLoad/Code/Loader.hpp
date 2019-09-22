@@ -36,8 +36,8 @@ namespace EasyLoader {
 
 
 extern "C" {
-	DLLIMPORT	void  Init();
-	DLLIMPORT	void  Release();
+	DLLIMPORT	void  InitEasyLoader();
+	DLLIMPORT	void  ReleaseEasyLoader();
 	DLLIMPORT void*  LoadMetadataFile(const char* fileName);
 	DLLIMPORT void UnLoadMetadataFile(const char* fileName);
 	DLLIMPORT int GetMetadataFileLength(const char* fileName);

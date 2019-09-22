@@ -88,10 +88,10 @@ namespace EasyLoader {
 
 extern "C" {
 	EasyLoader::Loader *loader = nullptr;
-	void Init() {
+	void InitEasyLoader() {
 		loader = new EasyLoader::Loader();
 	}
-	void Release()
+	void ReleaseEasyLoader()
 	{
 		if (loader != nullptr)
 		{
