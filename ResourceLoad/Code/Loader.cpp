@@ -72,6 +72,18 @@ namespace EasyLoader {
 		}
 		return iter->second.length;
 	}
+	void Loader::ReleaseAllFiles()
+	{
+		for (auto iter = _mmapMomery.begin(); iter != _mmapMomery.end(); iter++) {
+			MemoryMappedFile::Unmap(iter->second.ptr);
+			iter->second.ptr = nullptr;
+		}
+		_mmapMomery.clear();
+	}
+
+	Loader::~Loader() {
+		ReleaseAllFiles();
+	}
 }
 
 extern "C" {

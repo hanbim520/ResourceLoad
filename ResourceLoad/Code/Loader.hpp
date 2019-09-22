@@ -21,6 +21,8 @@
 
 namespace EasyLoader {
     class Loader{
+	public: 
+		~Loader();
 	private: 
 		std::map<size_t, MapHandle> _mmapMomery;
 		std::hash<std::string> ptr_hash;
@@ -28,6 +30,7 @@ namespace EasyLoader {
         void* LoadMetadataFile(const char* fileName);
 		void UnLoadMetadataFile(const char* fileName);
 		int GetMetadataFileLength(const char* fileName);
+		void ReleaseAllFiles();
     };
 }
 
